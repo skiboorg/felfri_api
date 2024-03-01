@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django_filters',
     'user',
     "shop",
-    "news.apps.NewsConfig"
+    "news.apps.NewsConfig",
+    "data.apps.DataConfig"
 ]
 
 MIDDLEWARE = [

@@ -4,7 +4,7 @@ from .models import *
 
 class GetCategories(generics.ListAPIView):
     serializer_class = CategorySerializer
-    queryset = Category.objects.filter(show_at_equipment=True)
+    queryset = Category.objects.all()
 
 class GetCategory(generics.RetrieveAPIView):
     serializer_class = CategorySerializer
