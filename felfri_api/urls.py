@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/user/', include('user.urls')),
 
     path('api/shop/', include('shop.urls')),
+    path('api/news/', include('news.urls')),
 
     path("ckeditor5/", include('django_ckeditor_5.urls'), name="ck_editor_5_upload_file"),
 

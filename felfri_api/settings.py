@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'nested_inline',
     'django_filters',
     'user',
-    "shop"
+    "shop",
+    "news.apps.NewsConfig"
 ]
 
 MIDDLEWARE = [

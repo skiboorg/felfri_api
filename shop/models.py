@@ -8,6 +8,7 @@ class Category(models.Model):
     image = ResizedImageField(size=[420, 420], quality=95, force_format='WEBP', upload_to='shop/category/images',
                               blank=True, null=True)
     name = models.CharField('Название', max_length=255, blank=False, null=False)
+    name_alt = models.CharField('Название1', max_length=255, blank=True, null=False)
     slug = models.CharField('ЧПУ', max_length=255,
                             help_text='Если не заполнено, создается на основе поля Назавание',
                             blank=True, null=True, editable=False)
