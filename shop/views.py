@@ -7,7 +7,7 @@ class GetCategories(generics.ListAPIView):
     queryset = Category.objects.all()
 
 class GetCategory(generics.RetrieveAPIView):
-    serializer_class = CategorySerializer
+    serializer_class = CategoryShortSerializer
     queryset = Category.objects.filter()
     lookup_field = 'slug'
 
