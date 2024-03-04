@@ -38,11 +38,24 @@ class ProductShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['name','slug','image_main','image_alt','price','cat_slug','subcat_name']
+        fields = ['name','slug','image_main','image_alt','price','cat_slug','subcat_name','file']
     def get_cat_slug(self,obj):
         return obj.subcategory.category.slug
     def get_subcat_name(self,obj):
         return obj.subcategory.name
+
+class SubCategoryInstructuctionSerializer(serializers.ModelSerializer):
+    products =serializers.SerializerMethodField()
+    class Meta:
+        model = SubCategory
+        fields = ['products','name','image']
+
+    def get_products(self, obj):
+        products = []
+        for product in obj.products.all():
+            if product.file:
+                products.append(product)
+        return ProductShortSerializer(products, many=True).data
 
 class SubCategorySerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True, required=False, read_only=True)
