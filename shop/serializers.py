@@ -9,6 +9,11 @@ class ProductImageSerializer(serializers.ModelSerializer):
         model = ProductImage
         fields = '__all__'
 
+class ProductTextBlockSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductTextBlock
+        fields = '__all__'
+
 class ProductComplectSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductComplect
@@ -22,6 +27,7 @@ class ProductSerializer(serializers.ModelSerializer):
     complects = ProductComplectSerializer(many=True,required=False,read_only=True)
     features = ProductFeatureSerializer(many=True,required=False,read_only=True)
     images = ProductImageSerializer(many=True,required=False,read_only=True)
+    text_blocks = ProductTextBlockSerializer(many=True,required=False,read_only=True)
     cat_slug = serializers.SerializerMethodField()
     cat_name = serializers.SerializerMethodField()
     class Meta:

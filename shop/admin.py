@@ -2,7 +2,9 @@ from django.contrib import admin
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 from django.utils.safestring import mark_safe
 from .models import *
-
+class ProductTextBlockInline(NestedStackedInline):
+    model = ProductTextBlock
+    extra = 0
 
 class ProductFeatureInline(NestedStackedInline):
     model = ProductFeature
@@ -18,7 +20,7 @@ class ProductImageInline(NestedStackedInline):
 
 class ProductAdmin(NestedModelAdmin):
     model = Product
-    inlines = [ProductFeatureInline,ProductImageInline,ProductComplectInline]
+    inlines = [ProductTextBlockInline,ProductFeatureInline,ProductImageInline,ProductComplectInline]
     readonly_fields = ['image_preview']
 
     def image_preview(self, obj):

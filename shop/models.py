@@ -74,7 +74,7 @@ class Product(models.Model):
                             blank=True, null=True, editable=False)
     price = models.CharField('Цена', max_length=255, blank=True, null=True)
     description = models.TextField('Описание', blank=True, null=True)
-    html_content = CKEditor5Field('SEO текст', blank=True, null=False, config_name='extends')
+    html_content = CKEditor5Field('SEO текст', blank=True, null=False, config_name='extends', editable=False)
     wb_link = models.CharField('Ссылка Wb', max_length=255, blank=True, null=True)
     ozon_link = models.CharField('Ссылка Ozon', max_length=255, blank=True, null=True)
     file = models.FileField('Файл инструкции', upload_to='shop/product/files', blank=True, null=True)
@@ -135,3 +135,21 @@ class ProductComplect(models.Model):
         ordering = ('order_num',)
         verbose_name = 'Комплектация'
         verbose_name_plural = 'Комплектации'
+
+
+class ProductTextBlock(models.Model):
+    order_num = models.IntegerField(default=1, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=False,
+                                related_name='text_blocks')
+    html_content = CKEditor5Field('текст', blank=True, null=False, config_name='extends')
+
+    image = ResizedImageField(size=[700, 560], quality=95, force_format='WEBP', upload_to='shop/product/images',
+                              blank=False, null=True)
+    is_image_right = models.BooleanField('Картинка справа',default=False, null=False)
+    def __str__(self):
+        return f'{self.order_num}'
+
+    class Meta:
+        ordering = ('order_num',)
+        verbose_name = 'Текстовый блок'
+        verbose_name_plural = 'Текстовые блоки'
