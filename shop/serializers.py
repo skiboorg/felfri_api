@@ -30,6 +30,7 @@ class ProductSerializer(serializers.ModelSerializer):
     text_blocks = ProductTextBlockSerializer(many=True,required=False,read_only=True)
     cat_slug = serializers.SerializerMethodField()
     cat_name = serializers.SerializerMethodField()
+    subcat_slug = serializers.SerializerMethodField()
     class Meta:
         model = Product
         fields = '__all__'
@@ -37,18 +38,26 @@ class ProductSerializer(serializers.ModelSerializer):
         return obj.subcategory.category.slug
     def get_cat_name(self,obj):
         return obj.subcategory.category.name
+    def get_subcat_slug(self,obj):
+        return obj.subcategory.slug
 
 class ProductShortSerializer(serializers.ModelSerializer):
     cat_slug = serializers.SerializerMethodField()
+    subcat_slug = serializers.SerializerMethodField()
     subcat_name = serializers.SerializerMethodField()
+    subcat_text = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ['name','slug','image_main','image_alt','price','cat_slug','subcat_name','file']
+        fields = ['name','slug','image_main','image_alt','price','cat_slug','subcat_name','file','subcat_slug','subcat_text']
     def get_cat_slug(self,obj):
         return obj.subcategory.category.slug
+    def get_subcat_slug(self,obj):
+        return obj.subcategory.slug
     def get_subcat_name(self,obj):
         return obj.subcategory.name
+    def get_subcat_text(self,obj):
+        return obj.subcategory.short_description
 
 class SubCategoryInstructuctionSerializer(serializers.ModelSerializer):
     products =serializers.SerializerMethodField()

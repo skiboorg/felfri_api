@@ -73,8 +73,7 @@ class Product(models.Model):
                             help_text='Если не заполнено, создается на основе поля Назавание',
                             blank=True, null=True, editable=False)
     price = models.CharField('Цена', max_length=255, blank=True, null=True)
-    description = models.TextField('Описание', blank=True, null=True)
-    html_content = CKEditor5Field('SEO текст', blank=True, null=False, config_name='extends', editable=False)
+    description = CKEditor5Field('Описание', blank=True, null=True, config_name='extends')
     wb_link = models.CharField('Ссылка Wb', max_length=255, blank=True, null=True)
     ozon_link = models.CharField('Ссылка Ozon', max_length=255, blank=True, null=True)
     file = models.FileField('Файл инструкции', upload_to='shop/product/files', blank=True, null=True)
@@ -88,9 +87,7 @@ class Product(models.Model):
         verbose_name_plural = 'Товары'
 
     def save(self, *args, **kwargs):
-
-        if not self.slug:
-            self.slug = slugify(self.name)
+        self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
 class ProductImage(models.Model):
