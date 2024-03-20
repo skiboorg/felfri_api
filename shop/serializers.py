@@ -31,6 +31,7 @@ class ProductSerializer(serializers.ModelSerializer):
     cat_slug = serializers.SerializerMethodField()
     cat_name = serializers.SerializerMethodField()
     subcat_slug = serializers.SerializerMethodField()
+    subcat_name = serializers.SerializerMethodField()
     class Meta:
         model = Product
         fields = '__all__'
@@ -40,6 +41,9 @@ class ProductSerializer(serializers.ModelSerializer):
         return obj.subcategory.category.name
     def get_subcat_slug(self,obj):
         return obj.subcategory.slug
+
+    def get_subcat_name(self,obj):
+        return obj.subcategory.name
 
 class ProductShortSerializer(serializers.ModelSerializer):
     cat_slug = serializers.SerializerMethodField()
