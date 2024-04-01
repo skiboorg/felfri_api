@@ -2,6 +2,16 @@ from django.db import models
 from django_resized import ResizedImageField
 
 
+class CallbackForm(models.Model):
+    name = models.CharField('Имя',max_length=255,blank=False, null=True)
+    email= models.EmailField('email',max_length=255,blank=False, null=True)
+    phone= models.CharField('Телефон',max_length=255,blank=False, null=True)
+    subject= models.CharField('Тема',max_length=255,blank=True, null=True)
+    text = models.TextField('Текст',blank=True, null=True)
+    file= models.FileField('Файл',upload_to='forms',blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
 class Banner(models.Model):
     order_num = models.IntegerField(default=10)
     image_big = ResizedImageField('Баннер десктоп', size=[1440, 640], quality=95, force_format='WEBP', upload_to='banner/images',
