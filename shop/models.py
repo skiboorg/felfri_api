@@ -9,9 +9,7 @@ class Category(models.Model):
                               blank=True, null=True)
     name = models.CharField('Название', max_length=255, blank=False, null=False)
     name_alt = models.CharField('Название1', max_length=255, blank=True, null=False)
-    slug = models.CharField('ЧПУ', max_length=255,
-                            help_text='Если не заполнено, создается на основе поля Назавание',
-                            blank=True, null=True, editable=False)
+    slug = models.CharField('ЧПУ', max_length=255,blank=True, null=True)
     show_at_equipment = models.BooleanField('Вывод в меню', default=True, null=False)
 
     def __str__(self):
@@ -19,8 +17,7 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
 
-        if not self.slug:
-            self.slug = slugify(self.name)
+        self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
     class Meta:
@@ -33,9 +30,7 @@ class SubCategory(models.Model):
     order_num = models.IntegerField(default=1, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=False, null=True, related_name='sub_categories')
     name = models.CharField('Название', max_length=255, blank=False, null=False)
-    slug = models.CharField('ЧПУ', max_length=255,
-                            help_text='Если не заполнено, создается на основе поля Назавание',
-                            blank=True, null=True, editable=False)
+    slug = models.CharField('ЧПУ', max_length=255,blank=True, null=True)
     image = ResizedImageField(size=[420, 420], quality=95, force_format='WEBP', upload_to='shop/category/images',
                               blank=False, null=True)
     short_description = models.TextField('Короткое описание', blank=True, null=False)
@@ -47,8 +42,7 @@ class SubCategory(models.Model):
 
     def save(self, *args, **kwargs):
 
-        if not self.slug:
-            self.slug = slugify(self.name)
+        self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
     class Meta:
