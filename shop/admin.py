@@ -19,6 +19,7 @@ class ProductImageInline(NestedStackedInline):
     extra = 0
 
 class ProductAdmin(NestedModelAdmin):
+    list_display = ('image_preview','name','subcategory','price','is_new','is_popular','is_active',)
     model = Product
     inlines = [ProductTextBlockInline,ProductFeatureInline,ProductImageInline,ProductComplectInline]
     readonly_fields = ['image_preview']
@@ -34,8 +35,10 @@ class ProductAdmin(NestedModelAdmin):
     image_preview.short_description = 'Текущее изображение'
 
 
-
+class SubCategoryAdmin(NestedModelAdmin):
+    list_display = ('name', 'category',)
+    model = SubCategory
 
 admin.site.register(Category)
-admin.site.register(SubCategory)
+admin.site.register(SubCategory,SubCategoryAdmin)
 admin.site.register(Product, ProductAdmin)
