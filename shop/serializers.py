@@ -53,7 +53,14 @@ class ProductShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['name','slug','image_main','image_alt','price','cat_slug','subcat_name','file','subcat_slug','subcat_text']
+        fields = ['name','slug','image_main','image_alt','price',
+                  'cat_slug','subcat_name','file','subcat_slug','subcat_text',
+                  'is_new',
+                  'is_popular',
+                  'is_active',
+                  'is_arrive',
+                  'is_in_stock'
+                  ]
     def get_cat_slug(self,obj):
         return obj.subcategory.category.slug
     def get_subcat_slug(self,obj):
