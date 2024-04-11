@@ -78,16 +78,21 @@ class SubCategoryInstructuctionSerializer(serializers.ModelSerializer):
 
     def get_products(self, obj):
         products = []
-        for product in obj.products.all():
+        for product in obj.products.filter(is_active=True):
             if product.file:
                 products.append(product)
         return ProductShortSerializer(products, many=True).data
 
 class SubCategorySerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many=True, required=False, read_only=True)
+    #products = ProductSerializer(many=True, required=False, read_only=True)
+    products = serializers.SerializerMethodField()
     class Meta:
         model = SubCategory
         fields = '__all__'
+
+    def get_products(self, obj):
+        active_products = obj.products.filter(is_active=True)
+        return ProductSerializer(active_products, many=True).data
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -98,10 +103,17 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class SubCategoryShortSerializer(serializers.ModelSerializer):
-    products = ProductShortSerializer(many=True, required=False, read_only=True)
+    #products = ProductShortSerializer(many=True, required=False, read_only=True)
+    products = serializers.SerializerMethodField()
     class Meta:
         model = SubCategory
         fields = '__all__'
+    def get_products(self, obj):
+        products = []
+        for product in obj.products.filter(is_active=True):
+            if product.file:
+                products.append(product)
+        return ProductShortSerializer(products, many=True).data
 
 
 class CategoryShortSerializer(serializers.ModelSerializer):

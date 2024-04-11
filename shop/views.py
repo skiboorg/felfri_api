@@ -33,9 +33,9 @@ class GetProduct(generics.RetrieveAPIView):
 
 class GetPopularProducts(generics.ListAPIView):
     serializer_class = ProductShortSerializer
-    queryset = Product.objects.filter(is_popular=True)
+    queryset = Product.objects.filter(is_popular=True, is_active=True)
 
 
 class GetNewProducts(generics.ListAPIView):
     serializer_class = ProductShortSerializer
-    queryset = Product.objects.filter(is_new=True)
+    queryset = Product.objects.filter(is_new=True, is_active=True)
