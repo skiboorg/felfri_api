@@ -109,11 +109,8 @@ class SubCategoryShortSerializer(serializers.ModelSerializer):
         model = SubCategory
         fields = '__all__'
     def get_products(self, obj):
-        products = []
-        for product in obj.products.filter(is_active=True):
-            if product.file:
-                products.append(product)
-        return ProductShortSerializer(products, many=True).data
+        active_products = obj.products.filter(is_active=True)
+        return ProductSerializer(active_products, many=True).data
 
 
 class CategoryShortSerializer(serializers.ModelSerializer):
