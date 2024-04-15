@@ -71,6 +71,7 @@ class Product(models.Model):
     wb_link = models.CharField('Ссылка Wb', max_length=255, blank=True, null=True)
     ozon_link = models.CharField('Ссылка Ozon', max_length=255, blank=True, null=True)
     file = models.FileField('Файл инструкции', upload_to='shop/product/files', blank=True, null=True)
+    youtube_embed_code = models.CharField('Код видео', max_length=50, blank=True, null=True)
 
     def __str__(self):
         return f'{self.name}'
