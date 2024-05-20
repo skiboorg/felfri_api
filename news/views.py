@@ -22,6 +22,9 @@ class GetNews(generics.ListAPIView):
         if tag:
             queryset = queryset.filter(tag__slug=tag)
         return queryset
+class GetIndexNews(generics.ListAPIView):
+    serializer_class = NewsItemShortSerializer
+    queryset = NewsItem.objects.all().order_by('-created')[:3]
 
 class GetNewsItem(generics.RetrieveAPIView):
     serializer_class = NewsItemSerializer
