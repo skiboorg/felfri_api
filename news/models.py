@@ -30,6 +30,9 @@ class NewsItem(models.Model):
     tag = models.ForeignKey(Tag,blank=True,null=True,on_delete=models.CASCADE,related_name='Тег')
     image = ResizedImageField('Картинка превью',size=[470, 315], quality=95, force_format='WEBP', upload_to='news/images',
                               blank=False, null=True)
+    image_top = ResizedImageField('Картинка вверху статьи (1080x450)', size=[1080, 450], quality=95, force_format='WEBP',
+                              upload_to='news/images',
+                              blank=False, null=True)
 
     name = models.CharField('Название', max_length=255, blank=False, null=True)
     slug = models.CharField('ЧПУ',max_length=255,

@@ -9,6 +9,7 @@ class CallbackForm(models.Model):
     subject= models.CharField('Тема',max_length=255,blank=True, null=True)
     text = models.TextField('Текст',blank=True, null=True)
     file= models.FileField('Файл',upload_to='forms',blank=True, null=True)
+    is_done = models.BooleanField('Обработана', default=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
 

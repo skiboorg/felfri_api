@@ -25,6 +25,12 @@ class GetNews(generics.ListAPIView):
 class GetIndexNews(generics.ListAPIView):
     serializer_class = NewsItemShortSerializer
     queryset = NewsItem.objects.all().order_by('-created')[:3]
+    def get_queryset(self):
+        random = self.request.query_params.get('random', None)
+        if not random:
+            return NewsItem.objects.all().order_by('-created')[:3]
+        else:
+            return NewsItem.objects.all().order_by('?')[:3]
 
 class GetNewsItem(generics.RetrieveAPIView):
     serializer_class = NewsItemSerializer
