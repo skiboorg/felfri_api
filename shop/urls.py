@@ -9,4 +9,6 @@ urlpatterns = [
     path('product/<slug>', views.GetProduct.as_view()),
     path('new', views.GetNewProducts.as_view()),
     path('popular', views.GetPopularProducts.as_view()),
+    path('updatetable', views.UpdateProducts.as_view()),
+    path('test', views.Test.as_view()),
 ]

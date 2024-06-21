@@ -51,6 +51,7 @@ class SubCategory(models.Model):
         verbose_name_plural = 'Подкатегории'
 
 class Product(models.Model):
+    article_num = models.CharField('Артикул',max_length=20,blank=True, null=True)
     order_num = models.IntegerField(default=1, null=True)
     subcategory = models.ForeignKey(SubCategory,blank=True,null=True,on_delete=models.CASCADE, related_name='products')
     is_new = models.BooleanField('Новинка', default=False, null=False)
@@ -66,7 +67,8 @@ class Product(models.Model):
     slug = models.CharField('ЧПУ',max_length=255,
                             help_text='Если не заполнено, создается на основе поля Назавание',
                             blank=True, null=True, editable=False)
-    price = models.CharField('Цена', max_length=255, blank=True, null=True)
+    price = models.CharField('Цена Ozon', max_length=255, blank=True, null=True)
+    price_wb = models.CharField('Цена WB', max_length=255, blank=True, null=True)
     description = CKEditor5Field('Описание', blank=True, null=True, config_name='extends')
     wb_link = models.CharField('Ссылка Wb', max_length=255, blank=True, null=True)
     ozon_link = models.CharField('Ссылка Ozon', max_length=255, blank=True, null=True)
