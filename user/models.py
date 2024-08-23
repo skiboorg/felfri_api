@@ -14,18 +14,18 @@ logger = logging.getLogger(__name__)
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def _create_user(self, email, password, **extra_fields):
-        user = self.model(email=email, **extra_fields)
+    def _create_user(self, phone, password, **extra_fields):
+        user = self.model(phone=phone, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, phone, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(phone, password, **extra_fields)
 
-    def create_superuser(self, email, password, **extra_fields):
+    def create_superuser(self, phone, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -34,7 +34,7 @@ class UserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(phone, password, **extra_fields)
 
 
 
@@ -42,16 +42,12 @@ class User(AbstractUser):
     username = None
     firstname = None
     lastname = None
-
-    uuid = models.UUIDField(default=uuid.uuid4, db_index=True)
-    email = models.CharField('Почта', max_length=255, blank=True, null=True, unique=True)
-
+    email = models.CharField('Почта', max_length=255, blank=True, null=True)
     fio = models.CharField('ФИО', max_length=255, blank=True, null=True)
-    phone = models.CharField('Телефон', max_length=255, blank=True, null=True)
-    avatar = models.FileField(upload_to='user/images',blank=True, null=True)
+    phone = models.CharField('Телефон', max_length=255, blank=True, null=True, unique=True)
 
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = []
     objects = UserManager()
 

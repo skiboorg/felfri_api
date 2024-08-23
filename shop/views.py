@@ -68,14 +68,7 @@ class Test(APIView):
                 "link_ozon": "https:\/\/ozon.ru\/context\/detail\/id\/1522019621\/",
                 "price_ozon": 1765
             },
-            {
-                "article_num": "22",
-                "Наименование": "Утюг проводной IR-01",
-                "link_wb": "https:\/\/www.wildberries.ru\/catalog\/218775205\/detail.aspx",
-                "price_wb": 1001,
-                "link_ozon": "https:\/\/ozon.ru\/context\/detail\/id\/1547667211\/",
-                "price_ozon": 702
-            },
         ]
-        re =requests.post('http://localhost:8000/api/shop/updatetable', json=data)
+        response = requests.post('https://felfri.ru/api/shop/updatetable', json=data)
+        print(response.text)
         return Response(status=200)

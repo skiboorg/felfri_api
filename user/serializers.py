@@ -11,7 +11,7 @@ from rest_framework import exceptions, serializers, status, generics
 from .models import *
 from djoser.conf import settings
 
-
+from order.serializers import OrderSerializer
 import logging
 logger = logging.getLogger(__name__)
 
@@ -21,14 +21,15 @@ logger = logging.getLogger(__name__)
 
 
 class UserSerializer(serializers.ModelSerializer):
+    orders = OrderSerializer(many=True, read_only=True)
     class Meta:
         model = User
         fields = [
             "id",
-            "uuid",
             "fio",
             "phone",
             'email',
+            'orders'
 
         ]
 
@@ -48,7 +49,9 @@ class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = tuple(User.REQUIRED_FIELDS) + (
+            'fio',
             'email',
+            'phone',
             'password',
         )
 
