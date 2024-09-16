@@ -56,6 +56,7 @@ class ProductShortSerializer(serializers.ModelSerializer):
         fields = ['name','slug','image_main','image_alt','price',
                   'cat_slug','subcat_name','file','subcat_slug','subcat_text',
                   'is_new',
+                  'article_num',
                   'is_popular',
                   'is_active',
                   'is_arrive',
