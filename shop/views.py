@@ -44,14 +44,16 @@ class UpdateProducts(APIView):
     def post(self, request):
         data = request.data
         for item in data:
-            product_qs = Product.objects.filter(article_num=item['article_num'])
-            if product_qs.exists():
-                product = product_qs.first()
-                product.price = item['price_ozon']
-                product.price_wb = item['price_wb']
-                product.wb_link = item['link_wb'].replace('\/','/')
-                product.ozon_link = item['link_ozon'].replace('\/','/')
-                product.save()
+            article_num = item.get('article_num',False)
+            if article_num:
+                product_qs = Product.objects.filter(article_num=article_num)
+                if product_qs.exists():
+                    product = product_qs.first()
+                    product.price = item.get('price_ozon',0)
+                    product.price_wb = item.get('price_wb',0)
+                    product.wb_link = item.get('link_wb','').replace('\/','/')
+                    product.ozon_link = item.get('link_ozon','').replace('\/','/')
+                    product.save()
         return Response(status=200)
 
 
