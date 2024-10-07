@@ -67,6 +67,7 @@ class Product(models.Model):
     slug = models.CharField('ЧПУ',max_length=255,
                             help_text='Если не заполнено, создается на основе поля Назавание',
                             blank=True, null=True, editable=False)
+    show_price = models.CharField('Цена в карточке', max_length=255, blank=True, null=True)
     price = models.CharField('Цена Ozon', max_length=255, blank=True, null=True)
     price_wb = models.CharField('Цена WB', max_length=255, blank=True, null=True)
     description = CKEditor5Field('Описание', blank=True, null=True, config_name='extends')
@@ -76,7 +77,7 @@ class Product(models.Model):
     youtube_embed_code = models.CharField('Код видео', max_length=50, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.name} | {self.price} | {self.price_wb}'
 
     class Meta:
         ordering = ('order_num',)

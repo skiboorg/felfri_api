@@ -43,17 +43,45 @@ class GetNewProducts(generics.ListAPIView):
 class UpdateProducts(APIView):
     def post(self, request):
         data = request.data
+
         for item in data:
-            article_num = item.get('article_num',False)
-            if article_num:
-                product_qs = Product.objects.filter(article_num=article_num)
-                if product_qs.exists():
-                    product = product_qs.first()
-                    product.price = item.get('price_ozon',0)
-                    product.price_wb = item.get('price_wb',0)
-                    product.wb_link = item.get('link_wb','').replace('\/','/')
-                    product.ozon_link = item.get('link_ozon','').replace('\/','/')
-                    product.save()
+            try:
+                article_num = item.get('article_num',False)
+                if article_num:
+
+                    product_qs = Product.objects.filter(article_num=article_num)
+                    if product_qs.exists():
+
+                        product = product_qs.first()
+                        print(product)
+                        price_ozon = item.get('price_ozon','0')
+                        price_wb = item.get('price_wb','0')
+                        link_wb = item.get('link_wb','').replace('\/','/')
+                        link_ozon = item.get('link_ozon','').replace('\/','/')
+
+
+
+                        product.price = price_ozon
+                        product.price_wb = price_wb
+                        product.wb_link = link_wb
+                        product.ozon_link = link_ozon
+
+                        if int(product.price) > int(product.price_wb):
+                            if int(product.price_wb) != 0:
+                                product.show_price = product.price_wb
+                            else:
+                                product.show_price = product.price
+                        else:
+                            if int(product.price) != 0:
+                                product.show_price = product.price
+                            else:
+                                product.show_price = product.price_wb
+
+
+                        product.save()
+            except:
+                pass
+
         return Response(status=200)
 
 
@@ -63,14 +91,14 @@ class Test(APIView):
         import requests
         data = [
             {
-                "article_num": "11",
+                "article_num": "asd123123",
                 "Наименование": "Утюг беспроводной IR-02",
-                "link_wb": "https:\/\/www.wildberries.ru\/catalog\/216809775\/detail.aspx",
-                "price_wb": 1617,
-                "link_ozon": "https:\/\/ozon.ru\/context\/detail\/id\/1522019621\/",
-                "price_ozon": 1765
+                 "link_wb": "https:\/\/www.wildberries.ru\/catalog\/216809775\/detail.aspx",
+                 "price_wb": 3,
+                 "link_ozon": "1https:\/\/ozon.ru\/context\/detail\/id\/1522019621\/",
+                 "price_ozon": 26
             },
         ]
-        response = requests.post('https://felfri.ru/api/shop/updatetable', json=data)
+        response = requests.post('http://localhost:8000/api/shop/updatetable', json=data)
         print(response.text)
         return Response(status=200)

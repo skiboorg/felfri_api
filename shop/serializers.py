@@ -53,7 +53,7 @@ class ProductShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['name','slug','image_main','image_alt','price',
+        fields = ['name','slug','image_main','image_alt','show_price',
                   'cat_slug','subcat_name','file','subcat_slug','subcat_text',
                   'is_new',
                   'article_num',
