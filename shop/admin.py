@@ -19,7 +19,17 @@ class ProductImageInline(NestedStackedInline):
     extra = 0
 
 class ProductAdmin(NestedModelAdmin):
-    list_display = ('image_preview','article_num','name','subcategory','price','is_new','is_popular','is_active',)
+    list_display = (
+        'image_preview',
+        'article_num',
+        'name',
+        'subcategory',
+        'show_price',
+        'price',
+        'price_wb',
+        'is_new',
+        'is_popular',
+        'is_active',)
     model = Product
     inlines = [ProductTextBlockInline,ProductFeatureInline,ProductImageInline,ProductComplectInline]
     readonly_fields = ['image_preview']
