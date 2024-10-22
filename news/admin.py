@@ -8,6 +8,7 @@ class ContentBlockInline(NestedStackedInline):
     extra = 0
 
 class NewsItemAdmin(NestedModelAdmin):
+    list_display = ('name','description',)
     model = NewsItem
     inlines = [ContentBlockInline]
 
