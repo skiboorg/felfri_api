@@ -28,21 +28,31 @@ class Tag(models.Model):
 class NewsItem(models.Model):
     order_num = models.IntegerField(default=1, null=True)
     tag = models.ForeignKey(Tag,blank=True,null=True,on_delete=models.CASCADE,related_name='Тег')
-    image = ResizedImageField('Картинка превью',size=[470, 315], quality=95, force_format='WEBP', upload_to='news/images',
-                              blank=False, null=True)
-    image_top = ResizedImageField('Картинка вверху статьи (1080x450)', size=[1080, 450], quality=95, force_format='WEBP',
-                              upload_to='news/images',
+
+    image = ResizedImageField('Картинка превью',size=[470, 315],
+                              quality=95, force_format='WEBP', upload_to='news/images',
                               blank=False, null=True)
 
+    image_top = ResizedImageField('Картинка вверху статьи (1080x450)', size=[1080, 450], quality=95, force_format='WEBP',
+                              upload_to='news/images', blank=False, null=True)
+
     name = models.CharField('Название', max_length=255, blank=False, null=True)
-    slug = models.CharField('ЧПУ',max_length=255,
+    slug = models.CharField('ЧПУ',
+                            max_length=255,
                             help_text='Если не заполнено, создается на основе поля Назавание',
-                            blank=True, null=True, editable=False)
+                            blank=True,
+                            null=True,
+                            editable=False)
+
     time_to_read = models.CharField('Время чтения', max_length=255, blank=True, null=True)
     description = models.TextField('Короткое описание', blank=True, null=True)
     html_content = CKEditor5Field('Контент', blank=True, null=False, config_name='extends')
 
+    page_title = models.CharField('Title', max_length=255, blank=True, null=True)
+    page_description = models.TextField('Description', blank=True, null=True)
+
     created = models.DateField(auto_now_add=True)
+
     def __str__(self):
         return f'{self.name}'
 
